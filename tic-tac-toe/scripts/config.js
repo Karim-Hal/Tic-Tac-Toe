@@ -1,0 +1,49 @@
+function openPlayerConfig(event){
+    const selectedPlayerId = +event.target.dataset.playerid;
+    playerConfigOverlayElement.style.display='block';
+    backDropElement.style.display='block';
+    editedPlayer = selectedPlayerId;
+
+
+}
+
+function closePlayerConfig(){
+    playerConfigOverlayElement.style.display='none';
+    backDropElement.style.display='none';
+
+    formElement.firstElementChild.classList.remove('error');
+    errorsOutputElement.textContent = "";
+
+    formElement.firstElementChild.lastElementChild.value = "";
+    
+}
+
+function savePlayerConfig(event){
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const enteredPlayername = formData.get('playername').trim();
+
+
+    if (!enteredPlayername){
+        event.target.children[0].classList.add('error');
+        errorsOutputElement.textContent='Please enter a valid name!';
+        return;
+    }
+
+    const updatedPlayerDataElement = document.getElementById('player-'+editedPlayer+'-data');
+    updatedPlayerDataElement.children[1].textContent = enteredPlayername;
+
+
+    players[editedPlayer-1].name = enteredPlayername;
+
+    closePlayerConfig();
+  
+
+
+
+
+
+
+
+}
